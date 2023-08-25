@@ -5,7 +5,7 @@ public class Employee {
     private int department;
     private double salary;
     private static int counter;
-    private int id;
+    private final int id;
 
     public Employee(String name, String surName, String middleName, int department, double salary) {
         this.name = name;
