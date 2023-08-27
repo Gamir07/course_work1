@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 public class EmployeeBook {
+
     private Employee[] employees = new Employee[10];
 
     public void showAllEmployees() {
@@ -22,50 +23,30 @@ public class EmployeeBook {
         return totalSalary;
     }
 
-    public void minSalary() {
-        Employee emp = null;
+    public Employee minSalary() {
+        double minSalary = Double.MAX_VALUE;
+        int index = 0;
 
-        for (Employee employee : employees) {
-            if (employee != null) {
-                emp = employee;
-                break;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null && employees[i].getSalary() < minSalary) {
+                minSalary = employees[i].getSalary();
+                index = i;
             }
         }
-        for (Employee employee : employees) {
-            if (emp == null) {
-                System.out.println("В массиве employees нет работников");
-                break;
-            } else if (employee != null && emp.getSalary() > employee.getSalary()) {
-                emp = employee;
-            }
-        }
-        if (emp != null) {
-            System.out.println("Employee with a min salary is " + emp.getName() + " " + emp.getSurName() + " " + emp.getMiddleName());
-            System.out.println();
-        }
+        return employees[index];
     }
 
-    public void maxSalary() {
-        Employee emp = null;
+    public Employee maxSalary() {
+        double minSalary = Double.MIN_VALUE;
+        int index = 0;
 
-        for (Employee employee : employees) {
-            if (employee != null) {
-                emp = employee;
-                break;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null && employees[i].getSalary() > minSalary) {
+                minSalary = employees[i].getSalary();
+                index = i;
             }
         }
-        for (Employee employee : employees) {
-            if (emp == null) {
-                System.out.println("В массиве employees нет работников");
-                break;
-            } else if (employee != null && emp.getSalary() < employee.getSalary()) {
-                emp = employee;
-            }
-        }
-        if (emp != null) {
-            System.out.println("Employee with a max salary is " + emp.getName() + " " + emp.getSurName() + " " + emp.getMiddleName());
-            System.out.println();
-        }
+        return employees[index];
     }
 
     public void averageSalary() {
@@ -97,49 +78,50 @@ public class EmployeeBook {
         }
     }
 
-    public void employeeWithMinSalary(int department) {
+    public Employee employeeWithMinSalary(int department) {
         if (department < 1 || department > 5) {
             throw new IllegalArgumentException("Такого департамента не существует");
         }
-        Employee employee = null;
+        double minSalary = Double.MAX_VALUE;
 
-        for (Employee emp : employees) {
-            if (emp != null && emp.getDepartment() == department) {
-                if (employee == null) {
-                    employee = emp;
-                } else if (employee.getSalary() > emp.getSalary()) {
-                    employee = emp;
+        int index = -1;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null) {
+                if (employees[i].getDepartment() == department && employees[i].getSalary() < minSalary) {
+                    minSalary = employees[i].getSalary();
+                    index = i;
                 }
+
             }
         }
-        if (employee == null) {
-            System.out.println("В департаменте № " + department + " никто не работает");
-            return;
+        if (index < 0) {
+            return null;
+        } else {
+            return employees[index];
         }
-        System.out.println(employee + " from department " + department + " has a min salary");
     }
 
-    public void employeeWithMaxSalary(int department) {
+    public Employee employeeWithMaxSalary(int department) {
         if (department < 1 || department > 5) {
             throw new IllegalArgumentException("Такого департамента не существует");
         }
-        Employee employee = null;
+        double maxSalary = Double.MIN_VALUE;
 
-        for (Employee emp : employees) {
-            if (emp != null && emp.getDepartment() == department) {
-                if (employee == null) {
-                    employee = emp;
+        int index = -1;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null) {
+                if (employees[i].getDepartment() == department && employees[i].getSalary() > maxSalary) {
+                    maxSalary = employees[i].getSalary();
+                    index = i;
                 }
-                if (employee.getSalary() < emp.getSalary()) {
-                    employee = emp;
-                }
+
             }
         }
-        if (employee == null) {
-            System.out.println("В департаменте № " + department + " никто не работает");
-            return;
+        if (index < 0) {
+            return null;
+        } else {
+            return employees[index];
         }
-        System.out.println(employee + " from department " + department + " has a max salary");
     }
 
     public void totalSalaryForDepartment(int department) {
@@ -262,7 +244,6 @@ public class EmployeeBook {
 
 
     }
-
 
 
 }
